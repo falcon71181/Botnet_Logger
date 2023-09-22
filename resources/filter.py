@@ -1,7 +1,7 @@
 import os
 
 def remove_empty_lines_inplace(file_path):
-    with open(file_path, 'r+') as file:
+    with open(file_path, 'r+', encoding='utf-8') as file:
         lines = file.readlines()
         file.seek(0)
         file.truncate(0)
